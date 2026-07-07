@@ -179,8 +179,8 @@ function renderUserDashboard() {
                 datasets: [{
                     label: 'Milestone Progress (%)',
                     data: [25, 50, 75, 100],
-                    borderColor: '#6366f1',
-                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    borderColor: '#00c853',
+                    backgroundColor: 'rgba(0, 200, 83, 0.1)',
                     tension: 0.4,
                     fill: true
                 }]
@@ -251,7 +251,7 @@ function renderAdminDashboard() {
                         users.filter(u => u.track === 'UI/UX Design').length,
                         users.filter(u => u.track === 'Data Analytics').length
                     ],
-                    backgroundColor: ['#6366f1', '#a855f7', '#10b981'],
+                    backgroundColor: ['#00c853', '#69f0ae', '#00e676'],
                     borderRadius: 8
                 }]
             },
@@ -891,7 +891,7 @@ function renderAnalyticsPage() {
                         users.filter(u => u.status === 'pending').length,
                         users.filter(u => u.status === 'rejected').length
                     ],
-                    backgroundColor: ['#10b981', '#f59e0b', '#f43f5e']
+                    backgroundColor: ['#00e676', '#f59e0b', '#f43f5e']
                 }]
             },
             options: {

@@ -1,0 +1,61 @@
+{% extends 'base_public.html' %}
+
+{% block title %}Application Success - BlueNova Technologies{% endblock %}
+
+{% block content %}
+<main class="container py-5 text-start">
+    <div class="row">
+        <div class="col-lg-7 mx-auto">
+            <div class="glass-panel p-5 text-center position-relative overflow-hidden">
+                <!-- Checkmark Animation Header -->
+                <div class="mb-4 d-inline-block position-relative">
+                    <div class="bg-success-subtle rounded-circle p-4 d-flex align-items-center justify-content-center mx-auto" style="width: 100px; height: 100px;">
+                        <i class="bi bi-check-circle-fill text-success display-3" style="line-height: 1;"></i>
+                    </div>
+                </div>
+
+                <h2 class="text-white fw-bold mb-3">Application Filed Successfully!</h2>
+                <p class="text-secondary mb-4 mx-auto col-md-10">
+                    Thank you for applying to the BlueNova Technologies Internship recruitment cohort. Your profile and documents have been successfully filed in our recruitment database.
+                </p>
+
+                <!-- Prefilled Course Details Alert Card -->
+                <div class="glass-panel p-4 bg-secondary-bg border border-secondary-subtle rounded-3 text-start mb-4">
+                    <h5 class="text-white mb-3 border-bottom border-secondary-subtle pb-2"><i class="bi bi-card-checklist text-primary me-2"></i>Submission Details</h5>
+                    <div class="row g-2 text-secondary small">
+                        <div class="col-sm-4 text-muted">Course Applied For:</div>
+                        <div class="col-sm-8 text-white fw-bold">{{ course|default:"Selected Domain Program" }}</div>
+                        <div class="col-sm-4 text-muted">Submission Date:</div>
+                        <div class="col-sm-8 text-white">July 2, 2026</div>
+                        <div class="col-sm-4 text-muted">Initial Review:</div>
+                        <div class="col-sm-8 text-warning"><i class="bi bi-clock-history me-1"></i>Pending Review</div>
+                    </div>
+                </div>
+
+                <!-- Generated Credentials Panel -->
+                {% if username %}
+                    <div class="glass-panel p-4 border border-warning-subtle rounded-3 text-start mb-4" style="background: rgba(234, 179, 8, 0.05);">
+                        <h5 class="text-warning mb-3"><i class="bi bi-shield-lock-fill me-2"></i>Student Portal Generated</h5>
+                        <p class="text-secondary small mb-3">
+                            A student candidate account has been auto-generated. You can log in to monitor your recruitment application review status, upload secondary files, or modify contact options.
+                        </p>
+                        <div class="p-3 bg-dark rounded border border-secondary-subtle d-flex flex-column gap-2 text-secondary font-monospace small">
+                            <div><strong>Username:</strong> <span class="text-white">{{ username }}</span></div>
+                            <div><strong>Password:</strong> <span class="text-white">password</span></div>
+                        </div>
+                        <div class="form-text text-muted small mt-2">
+                            <i class="bi bi-info-circle me-1"></i>Please change your default password immediately after logging in for security.
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Action Button Shortcuts -->
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                    <a href="/auth/login/" class="btn btn-premium px-4 py-3"><i class="bi bi-box-arrow-in-right me-2"></i>Log in to Student Portal</a>
+                    <a href="/" class="btn btn-secondary-premium px-4 py-3"><i class="bi bi-house-door me-2"></i>Return to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

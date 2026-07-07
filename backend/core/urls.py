@@ -49,19 +49,4 @@ urlpatterns = [
     path('profile/upload-picture/', views.upload_profile_picture, name='upload_profile_picture'),
     path('profile/remove-picture/', views.remove_profile_picture, name='remove_profile_picture'),
     
-    # Lecture LMS Workspace
-    path('learning/', views.lms_dashboard, name='lms_dashboard'),
-    path('learning/enroll/<int:course_id>/', views.lms_enroll, name='lms_enroll'),
-    path('learning/lecture/<int:lecture_id>/', views.lms_lecture, name='lms_lecture'),
-    path('learning/lecture/<int:lecture_id>/progress/', views.lms_update_progress, name='lms_update_progress'),
-    path('learning/lecture/<int:lecture_id>/note/save/', views.lms_save_note, name='lms_save_note'),
-    path('learning/lecture/<int:lecture_id>/note/delete/<int:note_id>/', views.lms_delete_note, name='lms_delete_note'),
-    path('learning/lecture/<int:lecture_id>/note/export/md/', views.lms_export_note_markdown, name='lms_export_note_markdown'),
-    path('learning/lecture/<int:lecture_id>/note/export/pdf/', views.lms_export_note_pdf, name='lms_export_note_pdf'),
-    path('learning/lecture/<int:lecture_id>/bookmark/', views.lms_toggle_bookmark, name='lms_toggle_bookmark'),
-    path('learning/bookmarks/', views.lms_bookmarks, name='lms_bookmarks'),
-    path('learning/quiz/<int:quiz_id>/', views.lms_quiz, name='lms_quiz'),
-    path('learning/assignment/submit/<int:assignment_id>/', views.lms_submit_assignment, name='lms_submit_assignment'),
-    path('learning/certificate/<int:cert_id>/download/', views.lms_download_certificate, name='lms_download_certificate'),
-    path('learning/admin/', views.lms_admin_panel, name='lms_admin_panel'),
 ]

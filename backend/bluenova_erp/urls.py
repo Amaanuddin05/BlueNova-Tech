@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render
-from core.views import page_404, get_erp_context, course_detail_view, apply_view
+from core.views import page_404, get_erp_context, course_detail_view, apply_view, apply_success_view
 
 def public_view(template_name):
     def view_func(request):
@@ -20,8 +20,9 @@ urlpatterns = [
     path('', public_view('index.html'), name='home'),
     path('about/', public_view('about.html'), name='about'),
     path('contact/', public_view('contact.html'), name='contact'),
-    path('services/apply/', apply_view, name='apply'),
-    path('services/<slug:course_slug>/', course_detail_view, name='course_detail'),
+    path('courses/apply/success/', apply_success_view, name='apply_success'),
+    path('courses/apply/', apply_view, name='apply'),
+    path('courses/<slug:course_slug>/', course_detail_view, name='course_detail'),
     path('services/', public_view('services.html'), name='services'),
     path('internships/', public_view('internships.html'), name='internships'),
     path('training/', public_view('training.html'), name='training'),

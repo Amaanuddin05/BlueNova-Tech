@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <!-- Cropper.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
-    <link href="/static/css/style.css?v=1.3" rel="stylesheet">
+    <link href="/static/css/style.css?v=6.0" rel="stylesheet">
     <style>
         .cropper-view-box,
         .cropper-face {
@@ -40,20 +40,20 @@
         <!-- Sidebar Navigation -->
         <aside class="app-sidebar">
             <div class="sidebar-header">
-                <a href="/erp/dashboard/" class="d-flex align-items-center gap-2 fw-bold text-white text-decoration-none">
+                <a href="/" class="d-flex align-items-center gap-2 fw-bold text-white text-decoration-none">
                     <i class="bi bi-rocket-takeoff-fill text-primary"></i> <span>BlueNova ERP</span>
                 </a>
                 <button class="sidebar-toggler sidebar-toggle-btn d-lg-none"><i class="bi bi-x-lg"></i></button>
             </div>
             <ul class="sidebar-menu">
                 <li class="sidebar-item">
-                    <a href="/erp/dashboard/" class="sidebar-link"><i class="bi bi-grid-fill"></i> <span>Dashboard</span></a>
+                    <a href="/" class="sidebar-link"><i class="bi bi-grid-fill"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="sidebar-item active">
                     <a href="/erp/profile/" class="sidebar-link"><i class="bi bi-person-fill"></i> <span>My Profile</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{% url 'lms_dashboard' %}" class="sidebar-link"><i class="bi bi-mortarboard-fill"></i> <span>Learning Portal</span></a>
+                    
                 </li>
                 <li class="sidebar-item">
                     <a href="/erp/upload-files/" class="sidebar-link"><i class="bi bi-cloud-arrow-up-fill"></i> <span>Upload Files</span></a>
@@ -187,7 +187,8 @@
     <!-- Cropper.js Script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     <script src="/static/js/mockData.js"></script>
-    <script src="/static/js/app.js"></script>
+    <script src="/static/js/app.js?v=6.0"></script>
+    <script src="/static/js/animations.js?v=6.0"></script>
     <script>
         // Profile Picture management logic inside Edit Profile screen
         let cropper = null;

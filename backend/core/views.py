@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.core.serializers.json import DjangoJSONEncoder
 from authentication.views import log_action
-from .models import Profile, UploadedFile, Notification, Message, ActivityLog, Feedback, Setting, History, Report, InternshipApplication, LMSCourse, LMSModule, Lecture, LectureProgress, LectureResource, StudentNote, Bookmark, Assignment, AssignmentSubmission, Quiz, QuizQuestion, QuizAnswer, Certificate, Enrollment
+from .models import Profile, UploadedFile, Notification, Message, ActivityLog, Feedback, Setting, History, Report, InternshipApplication
 from .decorators import admin_required, intern_required
 
 User = get_user_model()
@@ -599,74 +599,6 @@ def page_404(request, exception=None):
 
 # Dynamic Course Data Store
 COURSES_DATA = {
-    'web-development': {
-        'name': 'Web Development',
-        'tagline': 'Master frontend architectures and client side design workflows.',
-        'duration': '12 Weeks',
-        'difficulty': 'Intermediate',
-        'type': 'Development Track',
-        'mode': 'Hybrid',
-        'banner': 'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=1200&q=80',
-        'overview': 'Learn to build robust user interfaces and progressive web apps using modern grids and next-generation frameworks. Optimize assets, code responsive layouts, write clean semantic markup, and deploy micro-frontends with high performance.',
-        'curriculum': ['Semantic HTML & DOM layouts', 'CSS flexbox/grid layout design', 'Asynchronous JS fetching', 'React.js hooks and state management', 'Next.js static site rendering', 'Production Deployment & Vercel builds'],
-        'skills': ['HTML5', 'CSS3', 'JavaScript', 'React', 'Next.js', 'Bootstrap', 'Git'],
-        'roadmap': [
-            {'week': 'Week 1-2', 'topic': 'Semantic DOM Layouts & Grids'},
-            {'week': 'Week 3-4', 'topic': 'DOM JS Scripting & API requests'},
-            {'week': 'Week 5-6', 'topic': 'React hooks & state management'},
-            {'week': 'Week 7-8', 'topic': 'Next.js routing & build frameworks'},
-            {'week': 'Week 9-12', 'topic': 'Final Capstone Project and launch'}
-        ],
-        'projects': [
-            {'name': 'Enterprise Portfolio Platform', 'desc': 'Sleek responsive workspace platform.'},
-            {'name': 'Ticketing Dashboard Portal', 'desc': 'A fast service status tracker UI.'}
-        ],
-        'mentor': {
-            'name': 'Sarah Jenkins',
-            'role': 'Lead UI Architect',
-            'exp': '8+ Years Exp',
-            'spec': 'React Interfaces',
-            'photo': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80'
-        },
-        'career': ['Frontend Developer', 'UI Engineer', 'Web Architect'],
-        'faqs': [
-            {'q': 'What tools will I learn?', 'a': 'You will master VS Code, React DevTools, Git, and Chrome Performance tools.'}
-        ]
-    },
-    'mobile-app-development': {
-        'name': 'Mobile App Development',
-        'tagline': 'Build premium cross-platform iOS and Android apps.',
-        'duration': '12 Weeks',
-        'difficulty': 'Intermediate',
-        'type': 'Mobile Track',
-        'mode': 'Online',
-        'banner': 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80',
-        'overview': 'Engineered cross-platform mobile apps for Android and iOS devices using Flutter. Learn offline storage syncing, local caching, device push alerts, biometrics, and secure app store distributions.',
-        'curriculum': ['Dart programming rules', 'Flutter widgets orchestration', 'State management (Bloc/Provider)', 'Offline databases (SQLite local)', 'Device camera/biometrics API', 'App Store and Google Play builds'],
-        'skills': ['Dart', 'Flutter', 'Swift', 'Kotlin', 'SQLite', 'Firebase', 'APIs'],
-        'roadmap': [
-            {'week': 'Week 1-2', 'topic': 'Dart Syntax & Functional Loops'},
-            {'week': 'Week 3-4', 'topic': 'UI layout components & lists'},
-            {'week': 'Week 5-6', 'topic': 'State flow & local caching'},
-            {'week': 'Week 7-8', 'topic': 'Push triggers & hardware hooks'},
-            {'week': 'Week 9-12', 'topic': 'Play store deployment & tests'}
-        ],
-        'projects': [
-            {'name': 'Secure Vault Messenger', 'desc': 'End-to-end encrypted local storage messenger app.'},
-            {'name': 'Courier Delivery Tracking App', 'desc': 'A tracking system using dynamic mapping services.'}
-        ],
-        'mentor': {
-            'name': 'Michael Chang',
-            'role': 'Lead Flutter Engineer',
-            'exp': '7+ Years Exp',
-            'spec': 'Mobile Platform Architecture',
-            'photo': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80'
-        },
-        'career': ['Mobile App Developer', 'Flutter Engineer', 'iOS/Android Consultant'],
-        'faqs': [
-            {'q': 'Do I need a Mac?', 'a': 'A Mac is helpful to compile for iOS, but windows environments are fully supported for Android.'}
-        ]
-    },
     'python-development': {
         'name': 'Python Development',
         'tagline': 'Master data processing, background script queuing, and scripting pipelines.',
@@ -735,11 +667,11 @@ COURSES_DATA = {
             {'q': 'Does this cover security parameters?', 'a': 'Yes, including XSS filters, CSRF validations, and SQL injection protections.'}
         ]
     },
-    'mern-stack': {
-        'name': 'MERN Stack Development',
+    'full-stack-development': {
+        'name': 'Full Stack Development',
         'tagline': 'Master MongoDB, Express.js, React, and Node.js backend systems.',
-        'duration': '12 Weeks',
-        'difficulty': 'Intermediate',
+        'duration': '16 Weeks',
+        'difficulty': 'Intermediate-to-Advanced',
         'type': 'Full Stack Track',
         'mode': 'Hybrid',
         'banner': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80',
@@ -747,11 +679,11 @@ COURSES_DATA = {
         'curriculum': ['MongoDB schemas validation', 'Express routing and auth logs', 'React context frameworks', 'Node server scaling architectures', 'JWT tokens session rules', 'Docker integration & hosting'],
         'skills': ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'Mongoose', 'REST API', 'Git'],
         'roadmap': [
-            {'week': 'Week 1-2', 'topic': 'NodeJS servers & routing workflows'},
-            {'week': 'Week 3-4', 'topic': 'MongoDB databases collections and indexing'},
-            {'week': 'Week 5-6', 'topic': 'Express middlewares & JWT security'},
-            {'week': 'Week 7-8', 'topic': 'React interfaces integration'},
-            {'week': 'Week 9-12', 'topic': 'Fullstack ERP projects launch'}
+            {'week': 'Week 1-3', 'topic': 'NodeJS servers & routing workflows'},
+            {'week': 'Week 4-6', 'topic': 'MongoDB databases collections and indexing'},
+            {'week': 'Week 7-9', 'topic': 'Express middlewares & JWT security'},
+            {'week': 'Week 10-12', 'topic': 'React interfaces integration'},
+            {'week': 'Week 13-16', 'topic': 'Fullstack ERP projects launch'}
         ],
         'projects': [
             {'name': 'Collaborative Scrum Board', 'desc': 'Real-time kanban board using WebSockets.'},
@@ -764,9 +696,42 @@ COURSES_DATA = {
             'spec': 'MERN Architectures & Scaling',
             'photo': 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80'
         },
-        'career': ['MERN Developer', 'Fullstack Software Engineer', 'Node.js Consultant'],
+        'career': ['Fullstack Developer', 'MERN Engineer', 'Node.js Consultant'],
         'faqs': [
             {'q': 'Is WebSocket coverage included?', 'a': 'Yes, real-time message streams using Socket.io are covered.'}
+        ]
+    },
+    'react-development': {
+        'name': 'React Development',
+        'tagline': 'Build high-performance web applications using component frameworks.',
+        'duration': '8 Weeks',
+        'difficulty': 'Beginner-to-Intermediate',
+        'type': 'Frontend Track',
+        'mode': 'Online',
+        'banner': 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=1200&q=80',
+        'overview': 'Learn modular frontend development. Master state triggers, component templates, React Hooks, Router, and Context APIs.',
+        'curriculum': ['React state engines & lifecycle', 'Props orchestration & hooks usage', 'Redux toolkit state managers', 'Routing layouts & protected views', 'Tailwind CSS interfaces design', 'API data integrations'],
+        'skills': ['React.js', 'JavaScript', 'Redux', 'HTML5', 'CSS3', 'TailwindCSS', 'Git'],
+        'roadmap': [
+            {'week': 'Week 1-2', 'topic': 'React Components & Hooks basics'},
+            {'week': 'Week 3-4', 'topic': 'State stores & context managers'},
+            {'week': 'Week 5-6', 'topic': 'Asynchronous fetching & routes controls'},
+            {'week': 'Week 7-8', 'topic': 'Dynamic dashboards Capstone build'}
+        ],
+        'projects': [
+            {'name': 'Realtime Analytics Dashboard', 'desc': 'Dynamic client metrics viewer.'},
+            {'name': 'Interactive Chat Hub UI', 'desc': 'Messaging interface dashboard layouts.'}
+        ],
+        'mentor': {
+            'name': 'Sarah Jenkins',
+            'role': 'Frontend Architect',
+            'exp': '8+ Years Exp',
+            'spec': 'React Interfaces & Styling',
+            'photo': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80'
+        },
+        'career': ['React Developer', 'Frontend Software Engineer', 'UI Developer'],
+        'faqs': [
+            {'q': 'Are JavaScript fundamentals reviewed?', 'a': 'Yes, we cover ES6+ syntax including destructuring, map/filter, and promises in week 1.'}
         ]
     },
     'java-development': {
@@ -803,74 +768,6 @@ COURSES_DATA = {
             {'q': 'Are data structures covered?', 'a': 'Yes, advanced algorithms and collection pipelines are optimized.'}
         ]
     },
-    'ui-ux-design': {
-        'name': 'UI/UX Design',
-        'tagline': 'Create stunning interfaces, user flows, and interactive mockups.',
-        'duration': '12 Weeks',
-        'difficulty': 'Beginner-to-Intermediate',
-        'type': 'Creative Track',
-        'mode': 'Hybrid',
-        'banner': 'https://images.unsplash.com/photo-1561070791-26c113006238?auto=format&fit=crop&w=1200&q=80',
-        'overview': 'Design user wireframes, custom system layouts, responsive interfaces, user journey maps, and high-fidelity clickable prototype grids inside Figma.',
-        'curriculum': ['User research and journey outlines', 'Figma layouts grids & auto layout', 'Design system token guides', 'Hi-fi prototyping & interactive states', 'Accessibility Guidelines (WCAG)', 'Hand-off design developer workflows'],
-        'skills': ['Figma', 'UI Design', 'UX Research', 'Prototyping', 'Design Systems', 'Wireframing'],
-        'roadmap': [
-            {'week': 'Week 1-2', 'topic': 'User flows & research maps'},
-            {'week': 'Week 3-4', 'topic': 'Figma layout systems & colors'},
-            {'week': 'Week 5-6', 'topic': 'Auto-layout & components setup'},
-            {'week': 'Week 7-8', 'topic': 'Interactive prototypes and user tests'},
-            {'week': 'Week 9-12', 'topic': 'Figma developer handoff & guides'}
-        ],
-        'projects': [
-            {'name': 'BlueNova ERP Mockup App', 'desc': 'Complete responsive design system mapping.'},
-            {'name': 'Fintech Mobile App Prototype', 'desc': 'A payment app layout designed for quick flows.'}
-        ],
-        'mentor': {
-            'name': 'Aria Sterling',
-            'role': 'Product Designer',
-            'exp': '6+ Years Exp',
-            'spec': 'Design Systems & Figma Workflows',
-            'photo': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
-        },
-        'career': ['UI Developer', 'UX Researcher', 'Product Interface Designer'],
-        'faqs': [
-            {'q': 'Do I need coding experience?', 'a': 'No coding is required. This track is focused 100% on design tools.'}
-        ]
-    },
-    'data-science': {
-        'name': 'Data Science',
-        'tagline': 'Master data visualization pipelines, regression models, and statistical analysis.',
-        'duration': '12 Weeks',
-        'difficulty': 'Intermediate',
-        'type': 'Analytical Track',
-        'mode': 'Hybrid',
-        'banner': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
-        'overview': 'Construct clean ETL pipelines, statistical tables parsing, numerical metrics arrays, scatter graphs plotting, and regressions mapping.',
-        'curriculum': ['Python scientific stacks', 'Pandas array transformations', 'Matplotlib and Seaborn graphs', 'Statistical modeling systems', 'SQL databases aggregation workflows', 'Big Data Spark configurations'],
-        'skills': ['Python', 'Pandas', 'Matplotlib', 'SQL', 'Seaborn', 'Scikit-Learn', 'Git'],
-        'roadmap': [
-            {'week': 'Week 1-2', 'topic': 'Python Math syntax arrays'},
-            {'week': 'Week 3-4', 'topic': 'Pandas cleaning workflows'},
-            {'week': 'Week 5-6', 'topic': 'Plotting datasets visually'},
-            {'week': 'Week 7-8', 'topic': 'Regression algorithms & clusters'},
-            {'week': 'Week 9-12', 'topic': 'ETL pipeline capstone deployment'}
-        ],
-        'projects': [
-            {'name': 'Global Climate Grapher App', 'desc': 'Parses 50 years of temperature data and visualizes charts.'},
-            {'name': 'Customer Cohort Predictor', 'desc': 'A prediction algorithm categorizing cohort churn rates.'}
-        ],
-        'mentor': {
-            'name': 'Ryan Vance',
-            'role': 'Senior Data Scientist',
-            'exp': '7+ Years Exp',
-            'spec': 'Statistical Pipelines & SQL',
-            'photo': 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=200&q=80'
-        },
-        'career': ['Data Analyst', 'Data Engineer', 'Visualization Consultant'],
-        'faqs': [
-            {'q': 'Is math intensive?', 'a': 'Basic statistics and probability are required. We review these in weeks 1 and 2.'}
-        ]
-    },
     'artificial-intelligence': {
         'name': 'Artificial Intelligence',
         'tagline': 'Implement neural network layouts, deep learning grids, and NLP pipelines.',
@@ -903,6 +800,40 @@ COURSES_DATA = {
         'career': ['AI Software Engineer', 'NLP Developer', 'Deep Learning Specialist'],
         'faqs': [
             {'q': 'Which library is focused?', 'a': 'We use PyTorch for model architectures and training loops.'}
+        ]
+    },
+    'data-science': {
+        'name': 'Data Science',
+        'tagline': 'Master data visualization pipelines, regression models, and statistical analysis.',
+        'duration': '12 Weeks',
+        'difficulty': 'Intermediate',
+        'type': 'Analytical Track',
+        'mode': 'Hybrid',
+        'banner': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+        'overview': 'Construct clean ETL pipelines, statistical tables parsing, numerical metrics arrays, scatter graphs plotting, and regressions mapping.',
+        'curriculum': ['Python scientific stacks', 'Pandas array transformations', 'Matplotlib and Seaborn graphs', 'Statistical modeling systems', 'SQL databases aggregation workflows', 'Big Data Spark configurations'],
+        'skills': ['Python', 'Pandas', 'Matplotlib', 'SQL', 'Seaborn', 'Scikit-Learn', 'Git'],
+        'roadmap': [
+            {'week': 'Week 1-2', 'topic': 'Python Math syntax arrays'},
+            {'week': 'Week 3-4', 'topic': 'Pandas cleaning workflows'},
+            {'week': 'Week 5-6', 'topic': 'Plotting datasets visually'},
+            {'week': 'Week 7-8', 'topic': 'Regression algorithms & clusters'},
+            {'week': 'Week 9-12', 'topic': 'ETL pipeline capstone deployment'}
+        ],
+        'projects': [
+            {'name': 'Global Climate Grapher App', 'desc': 'Parses 50 years of temperature data and visualizes charts.'},
+            {'name': 'Customer Cohort Predictor', 'desc': 'A prediction algorithm categorizing cohort churn rates.'}
+        ],
+        'mentor': {
+            'name': 'Ryan Vance',
+            'role': 'Senior Data Scientist',
+            'exp': '7+ Years Exp',
+            'spec': 'Statistical Pipelines & SQL',
+            'photo': 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=200&q=80'
+        },
+        'career': ['Data Analyst', 'Data Engineer', 'Data Scientist'],
+        'faqs': [
+            {'q': 'Is math intensive?', 'a': 'Basic statistics and probability are required. We review these in weeks 1 and 2.'}
         ]
     },
     'machine-learning': {
@@ -1075,6 +1006,40 @@ COURSES_DATA = {
             {'q': 'Are hardware kits provided?', 'a': 'Yes, we provide dynamic hardware board simulators for all online modules.'}
         ]
     },
+    'ui-ux-design': {
+        'name': 'UI/UX Design',
+        'tagline': 'Create stunning interfaces, user flows, and interactive mockups.',
+        'duration': '12 Weeks',
+        'difficulty': 'Beginner-to-Intermediate',
+        'type': 'Creative Track',
+        'mode': 'Hybrid',
+        'banner': 'https://images.unsplash.com/photo-1561070791-26c113006238?auto=format&fit=crop&w=1200&q=80',
+        'overview': 'Design user wireframes, custom system layouts, responsive interfaces, user journey maps, and high-fidelity clickable prototype grids inside Figma.',
+        'curriculum': ['User research and journey outlines', 'Figma layouts grids & auto layout', 'Design system token guides', 'Hi-fi prototyping & interactive states', 'Accessibility Guidelines (WCAG)', 'Hand-off design developer workflows'],
+        'skills': ['Figma', 'UI Design', 'UX Research', 'Prototyping', 'Design Systems', 'Wireframing'],
+        'roadmap': [
+            {'week': 'Week 1-2', 'topic': 'User flows & research maps'},
+            {'week': 'Week 3-4', 'topic': 'Figma layout systems & colors'},
+            {'week': 'Week 5-6', 'topic': 'Auto-layout & components setup'},
+            {'week': 'Week 7-8', 'topic': 'Interactive prototypes and user tests'},
+            {'week': 'Week 9-12', 'topic': 'Figma developer handoff & guides'}
+        ],
+        'projects': [
+            {'name': 'BlueNova ERP Mockup App', 'desc': 'Complete responsive design system mapping.'},
+            {'name': 'Fintech Mobile App Prototype', 'desc': 'A payment app layout designed for quick flows.'}
+        ],
+        'mentor': {
+            'name': 'Aria Sterling',
+            'role': 'Product Designer',
+            'exp': '6+ Years Exp',
+            'spec': 'Design Systems & Figma Workflows',
+            'photo': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+        },
+        'career': ['UI Developer', 'UX Researcher', 'Product Interface Designer'],
+        'faqs': [
+            {'q': 'Do I need coding experience?', 'a': 'No coding is required. This track is focused 100% on design tools.'}
+        ]
+    },
     'digital-marketing': {
         'name': 'Digital Marketing',
         'tagline': 'Master SEO analytics, campaign performance tracking, and metric dashboards.',
@@ -1235,8 +1200,8 @@ def apply_view(request):
         msg = f"Your application for {course} was filed successfully!"
         if user_created:
             msg += f" A student portal account was auto-generated. Username: {user.username}, Password: password. Please log in to monitor review progress."
-            
-        return JsonResponse({'success': True, 'message': msg})
+        username = user.username if user_created else None
+        return JsonResponse({'success': True, 'message': msg, 'course': course, 'username': username})
         
     context = {
         'courses': [data['name'] for data in COURSES_DATA.values()],
@@ -1244,6 +1209,19 @@ def apply_view(request):
     }
     context.update(get_erp_context(request))
     return render(request, 'apply.html', context)
+
+
+def apply_success_view(request):
+    course = request.GET.get('course', '').strip()
+    username = request.GET.get('username', '').strip()
+    
+    context = {
+        'course': course,
+        'username': username
+    }
+    if request.user.is_authenticated:
+        context.update(get_erp_context(request))
+    return render(request, 'apply_success.html', context)
 
 
 @login_required
@@ -1362,666 +1340,3 @@ def download_application_resume_view(request, app_id):
     response['Content-Disposition'] = f'attachment; filename="{os.path.basename(app.resume.name)}"'
     return response
 
-
-# Helper to format seconds to HH:MM:SS
-def format_seconds(seconds):
-    h = int(seconds // 3600)
-    m = int((seconds % 3600) // 60)
-    s = int(seconds % 60)
-    if h > 0:
-        return f"{h:02d}:{m:02d}:{s:02d}"
-    return f"{m:02d}:{s:02d}"
-
-
-# Automatic Seeding Helper for LMS
-def seed_lms_data_if_empty():
-    if LMSCourse.objects.count() > 0:
-        return
-        
-    course1 = LMSCourse.objects.create(
-        name='Python Full Stack Development',
-        tagline='Master Python scripting, OOP design, and Django database schemas.',
-        description='A complete guide to becoming a professional python backend engineer. Learn virtualenv tools, loops, class designs, and REST api views.',
-        duration='12 Weeks',
-        difficulty='Intermediate',
-        banner_url='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80'
-    )
-    
-    m1 = LMSModule.objects.create(course=course1, title='Module 1: Introduction to Scripting', order=1)
-    m2 = LMSModule.objects.create(course=course1, title='Module 2: Lists, Dicts, and Functions', order=2)
-    m3 = LMSModule.objects.create(course=course1, title='Module 3: Object Oriented Design (OOP)', order=3)
-    m4 = LMSModule.objects.create(course=course1, title='Module 4: Django backend databases', order=4)
-    
-    l1 = Lecture.objects.create(
-        module=m1,
-        title='1. Python Installation & Setup',
-        video_url='https://www.youtube.com/embed/rfscVS0vtbw',
-        youtube_id='rfscVS0vtbw',
-        description='Learn how to install Python on Windows, macOS, and Linux systems. Set up a virtual environment and configure VS Code editor.',
-        duration='00:10',
-        order=1
-    )
-    l2 = Lecture.objects.create(
-        module=m1,
-        title='2. Declaring Variables & Types',
-        video_url='https://www.youtube.com/embed/kqtD5dpn9C8',
-        youtube_id='kqtD5dpn9C8',
-        description='Explore numbers, strings, booleans, and arithmetic operators inside Python.',
-        duration='00:12',
-        order=2
-    )
-    l3 = Lecture.objects.create(
-        module=m2,
-        title='3. Lists & Dictionaries loops',
-        video_url='https://www.youtube.com/embed/khKv-8q7YmY',
-        youtube_id='khKv-8q7YmY',
-        description='Understand indexing, mutable properties, loops iteration, and items key-value structures.',
-        duration='00:18',
-        order=3
-    )
-    l4 = Lecture.objects.create(
-        module=m4,
-        title='4. Django MVC Setup',
-        video_url='https://www.youtube.com/embed/9Oezn1rKhnA',
-        youtube_id='9Oezn1rKhnA',
-        description='Install Django packages, run local servers, and understand templates rendering views.',
-        duration='00:20',
-        order=4
-    )
-    
-    LectureResource.objects.create(lecture=l1, title='Installation Guide Cheat Sheet', resource_type='PDF')
-    LectureResource.objects.create(lecture=l2, title='Variables Code Samples', resource_type='ZIP')
-    Assignment.objects.create(lecture=l2, title='Assignment 1: Variables Conversion Script', description='Write a python script that prompts user inputs, converts strings to numbers, and prints formatted output.', due_date=None)
-    
-    quiz1 = Quiz.objects.create(module=m1, title='Python Basics Assessment')
-    QuizQuestion.objects.create(
-        quiz=quiz1,
-        question_text='Which of the following functions displays variable types in Python?',
-        question_type='MCQ',
-        options_json=json.dumps(['type()', 'print()', 'input()', 'len()']),
-        correct_answer='type()'
-    )
-    QuizQuestion.objects.create(
-        quiz=quiz1,
-        question_text='Is Python a compiled language?',
-        question_type='TF',
-        options_json=json.dumps(['True', 'False']),
-        correct_answer='False'
-    )
-    
-    # Second course
-    course2 = LMSCourse.objects.create(
-        name='React Frontend Development',
-        tagline='Build stunning single page apps using React Hooks, Router, and Context.',
-        description='Learn modular frontend development. Master state triggers, component templates, and external API requests integrations.',
-        duration='8 Weeks',
-        difficulty='Beginner',
-        banner_url='https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=1200&q=80'
-    )
-    rm1 = LMSModule.objects.create(course=course2, title='Module 1: Components and State', order=1)
-    Lecture.objects.create(
-        module=rm1,
-        title='1. React Components & Props',
-        video_url='https://www.youtube.com/embed/w7ejDZ8SWv8',
-        youtube_id='w7ejDZ8SWv8',
-        description='Deconstruct standard React functional components structures and properties passing.',
-        duration='00:15',
-        order=1
-    )
-
-
-@login_required
-def lms_dashboard(request):
-    seed_lms_data_if_empty()
-    
-    # Auto-enroll user in Python course if they have 0 enrollments
-    if Enrollment.objects.filter(user=request.user).count() == 0:
-        first_course = LMSCourse.objects.first()
-        if first_course:
-            Enrollment.objects.create(user=request.user, course=first_course)
-            
-    # Fetch all courses
-    courses = LMSCourse.objects.all()
-    
-    enrolled_courses = []
-    available_courses = []
-    
-    for c in courses:
-        enrolled = Enrollment.objects.filter(user=request.user, course=c).first()
-        
-        lectures = Lecture.objects.filter(module__course=c)
-        total_lectures = lectures.count()
-        
-        completed_count = LectureProgress.objects.filter(
-            user=request.user,
-            lecture__module__course=c,
-            completed=True
-        ).count()
-        
-        progress_pct = 0.0
-        if total_lectures > 0:
-            progress_pct = round((completed_count / total_lectures) * 100.0, 1)
-            
-        last_progress = LectureProgress.objects.filter(
-            user=request.user,
-            lecture__module__course=c
-        ).order_by('-updated_at').first()
-        
-        continue_lecture = None
-        if last_progress:
-            continue_lecture = last_progress.lecture
-        elif total_lectures > 0:
-            continue_lecture = lectures.order_by('module__order', 'order').first()
-            
-        cert = Certificate.objects.filter(user=request.user, course=c).first()
-        
-        course_data = {
-            'course': c,
-            'progress_pct': progress_pct,
-            'continue_lecture': continue_lecture,
-            'total_lectures': total_lectures,
-            'completed_lectures': completed_count,
-            'remaining_lectures': total_lectures - completed_count,
-            'last_accessed': enrolled.last_accessed if enrolled else None,
-            'certificate': cert
-        }
-        
-        if enrolled:
-            enrolled_courses.append(course_data)
-        else:
-            available_courses.append(course_data)
-            
-    recent_notes = StudentNote.objects.filter(user=request.user).order_by('-updated_at')[:5]
-    user_certs = Certificate.objects.filter(user=request.user)
-    
-    context = {
-        'enrolled_courses': enrolled_courses,
-        'available_courses': available_courses,
-        'recent_notes': recent_notes,
-        'certificates_earned': user_certs
-    }
-    context.update(get_erp_context(request))
-    return render(request, 'lms_dashboard.html', context)
-
-
-@login_required
-@csrf_protect
-def lms_enroll(request, course_id):
-    if request.method == 'POST':
-        course = get_object_or_404(LMSCourse, id=course_id)
-        Enrollment.objects.get_or_create(user=request.user, course=course)
-        messages.success(request, f"Successfully enrolled in {course.name}!")
-    return redirect('lms_dashboard')
-
-
-@login_required
-def lms_lecture(request, lecture_id):
-    lecture = get_object_or_404(Lecture, id=lecture_id)
-    course = lecture.module.course
-    
-    # Access Control check: verify enrollment
-    enrolled = Enrollment.objects.filter(user=request.user, course=course).first()
-    if not enrolled:
-        messages.error(request, f"You must be enrolled to view lectures inside {course.name}.")
-        return redirect('lms_dashboard')
-        
-    # Update enrollment last accessed timestamp
-    enrolled.save()
-    
-    # Fetch modules & lectures structure
-    modules = LMSModule.objects.filter(course=course).prefetch_related('lectures')
-    
-    # Find or create lecture progress
-    progress, created = LectureProgress.objects.get_or_create(user=request.user, lecture=lecture)
-    if not created:
-        # Increment visits
-        pass
-        
-    # Load notes & bookmarks
-    notes = StudentNote.objects.filter(user=request.user, lecture=lecture).order_by('-created_at')
-    bookmarked = Bookmark.objects.filter(user=request.user, lecture=lecture).exists()
-    
-    # Calculate previous and next lectures for workspace navigation
-    all_lectures = list(Lecture.objects.filter(module__course=course).order_by('module__order', 'order'))
-    current_idx = -1
-    for idx, l in enumerate(all_lectures):
-        if l.id == lecture.id:
-            current_idx = idx
-            break
-            
-    prev_lecture = all_lectures[current_idx - 1] if current_idx > 0 else None
-    next_lecture = all_lectures[current_idx + 1] if current_idx < len(all_lectures) - 1 else None
-    
-    # Calculate progress % for dashboard sidebar
-    completed_count = LectureProgress.objects.filter(
-        user=request.user,
-        lecture__module__course=course,
-        completed=True
-    ).count()
-    total_lectures = len(all_lectures)
-    progress_pct = round((completed_count / total_lectures) * 100.0, 1) if total_lectures > 0 else 0.0
-    
-    quizzes = Quiz.objects.filter(module=lecture.module)
-    assignments = Assignment.objects.filter(lecture=lecture)
-    
-    assignment_data = []
-    for ass in assignments:
-        submission = AssignmentSubmission.objects.filter(user=request.user, assignment=ass).first()
-        assignment_data.append({
-            'assignment': ass,
-            'submission': submission
-        })
-        
-    context = {
-        'lecture': lecture,
-        'course': course,
-        'modules': modules,
-        'progress': progress,
-        'notes_list': notes,
-        'bookmarked': bookmarked,
-        'prev_lecture': prev_lecture,
-        'next_lecture': next_lecture,
-        'progress_pct': progress_pct,
-        'quizzes': quizzes,
-        'assignments_data': assignment_data,
-        'resources': lecture.resources.all()
-    }
-    context.update(get_erp_context(request))
-    return render(request, 'lms_lecture.html', context)
-
-
-@login_required
-@csrf_protect
-def lms_update_progress(request, lecture_id):
-    if request.method != 'POST':
-        return JsonResponse({'success': False, 'message': 'POST method required.'}, status=405)
-        
-    lecture = get_object_or_404(Lecture, id=lecture_id)
-    progress, _ = LectureProgress.objects.get_or_create(user=request.user, lecture=lecture)
-    
-    try:
-        data = json.loads(request.body)
-        watch_pct = float(data.get('watch_percentage', progress.watch_percentage))
-        resume_sec = float(data.get('resume_timestamp', progress.resume_timestamp))
-        time_spent_incr = int(data.get('time_spent', 0))
-        force_complete = data.get('force_complete', False)
-        
-        progress.watch_percentage = max(progress.watch_percentage, watch_pct)
-        progress.resume_timestamp = resume_sec
-        progress.time_spent += time_spent_incr
-        
-        if progress.watch_percentage >= 90.0 or force_complete:
-            progress.completed = True
-            progress.watch_percentage = 100.0
-            
-        progress.save()
-        
-        # Check course completion to auto-issue certificate
-        course = lecture.module.course
-        total_lectures = Lecture.objects.filter(module__course=course).count()
-        completed_lectures = LectureProgress.objects.filter(
-            user=request.user,
-            lecture__module__course=course,
-            completed=True
-        ).count()
-        
-        issued_cert = False
-        if total_lectures > 0 and completed_lectures == total_lectures:
-            cert, created = Certificate.objects.get_or_create(
-                user=request.user,
-                course=course,
-                defaults={'verification_id': f"BNT-2026-{request.user.id}-{course.id}"}
-            )
-            issued_cert = created
-            
-        return JsonResponse({
-            'success': True,
-            'completed': progress.completed,
-            'issued_cert': issued_cert,
-            'watch_percentage': progress.watch_percentage
-        })
-    except Exception as e:
-        return JsonResponse({'success': False, 'message': str(e)}, status=400)
-
-
-@login_required
-@csrf_protect
-def lms_save_note(request, lecture_id):
-    if request.method != 'POST':
-        return JsonResponse({'success': False, 'message': 'POST method required.'}, status=405)
-        
-    lecture = get_object_or_404(Lecture, id=lecture_id)
-    
-    try:
-        data = json.loads(request.body)
-        note_id = data.get('id')
-        content = data.get('content', '').strip()
-        timestamp = float(data.get('timestamp', 0.0))
-        
-        if not content:
-            return JsonResponse({'success': False, 'message': 'Note content cannot be empty.'}, status=400)
-            
-        if note_id:
-            note = get_object_or_404(StudentNote, id=note_id, user=request.user)
-            note.content = content
-            note.save()
-        else:
-            note = StudentNote.objects.create(
-                user=request.user,
-                lecture=lecture,
-                content=content,
-                timestamp=timestamp
-            )
-            
-        return JsonResponse({
-            'success': True,
-            'note_id': note.id,
-            'timestamp_str': format_seconds(note.timestamp),
-            'timestamp_val': note.timestamp
-        })
-    except Exception as e:
-        return JsonResponse({'success': False, 'message': str(e)}, status=400)
-
-
-@login_required
-@csrf_protect
-def lms_delete_note(request, lecture_id, note_id):
-    if request.method != 'POST':
-        return JsonResponse({'success': False, 'message': 'POST method required.'}, status=405)
-        
-    note = get_object_or_404(StudentNote, id=note_id, user=request.user, lecture_id=lecture_id)
-    note.delete()
-    return JsonResponse({'success': True})
-
-
-@login_required
-def lms_export_note_markdown(request, lecture_id):
-    lecture = get_object_or_404(Lecture, id=lecture_id)
-    notes = StudentNote.objects.filter(user=request.user, lecture=lecture).order_by('timestamp')
-    
-    content = f"# Notes for Lecture: {lecture.title}\n"
-    content += f"Course: {lecture.module.course.name} • Module: {lecture.module.title}\n"
-    content += "========================================================================\n\n"
-    
-    import re
-    for n in notes:
-        time_str = format_seconds(n.timestamp)
-        clean_text = re.sub('<[^<]+?>', '', n.content)
-        content += f"### Timestamp: {time_str}\n{clean_text}\n\n---\n\n"
-        
-    response = HttpResponse(content, content_type='text/markdown')
-    response['Content-Disposition'] = f'attachment; filename="LMS_Notes_Lecture_{lecture.id}.md"'
-    return response
-
-
-@login_required
-def lms_export_note_pdf(request, lecture_id):
-    lecture = get_object_or_404(Lecture, id=lecture_id)
-    notes = StudentNote.objects.filter(user=request.user, lecture=lecture).order_by('timestamp')
-    
-    from reportlab.pdfgen import canvas
-    buffer = io.BytesIO()
-    p = canvas.Canvas(buffer)
-    
-    p.setFont("Helvetica-Bold", 20)
-    p.drawString(50, 800, f"Lecture Notes: {lecture.title}")
-    p.setFont("Helvetica", 11)
-    p.drawString(50, 780, f"Course: {lecture.module.course.name}")
-    p.line(50, 770, 550, 770)
-    
-    y = 740
-    import re
-    for n in notes:
-        if y < 100:
-            p.showPage()
-            y = 780
-        p.setFont("Helvetica-Bold", 12)
-        p.drawString(50, y, f"Timestamp: {format_seconds(n.timestamp)}")
-        y -= 20
-        
-        p.setFont("Helvetica", 10)
-        clean_text = re.sub('<[^<]+?>', '', n.content)
-        lines = clean_text.split('\n')
-        for line in lines:
-            if y < 100:
-                p.showPage()
-                y = 780
-            p.drawString(60, y, line[:90])
-            y -= 15
-        y -= 15
-        
-    p.showPage()
-    p.save()
-    
-    buffer.seek(0)
-    response = HttpResponse(buffer, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="LMS_Notes_Lecture_{lecture.id}.pdf"'
-    return response
-
-
-@login_required
-@csrf_protect
-def lms_toggle_bookmark(request, lecture_id):
-    if request.method != 'POST':
-        return JsonResponse({'success': False, 'message': 'POST method required.'}, status=405)
-        
-    lecture = get_object_or_404(Lecture, id=lecture_id)
-    bookmark_query = Bookmark.objects.filter(user=request.user, lecture=lecture)
-    
-    if bookmark_query.exists():
-        bookmark_query.delete()
-        bookmarked = False
-        msg = f"Bookmark removed for {lecture.title}"
-    else:
-        try:
-            data = json.loads(request.body)
-            sec = float(data.get('timestamp', 0.0))
-        except Exception:
-            sec = 0.0
-            
-        Bookmark.objects.create(
-            user=request.user,
-            lecture=lecture,
-            title=f"Bookmark at {format_seconds(sec)}",
-            timestamp=sec
-        )
-        bookmarked = True
-        msg = f"Bookmark saved at {format_seconds(sec)}!"
-        
-    return JsonResponse({
-        'success': True,
-        'bookmarked': bookmarked,
-        'message': msg
-    })
-
-
-@login_required
-def lms_bookmarks(request):
-    bookmarks = Bookmark.objects.filter(user=request.user).order_by('-created_at')
-    context = {
-        'bookmarks_list': bookmarks
-    }
-    context.update(get_erp_context(request))
-    return render(request, 'lms_bookmarks.html', context)
-
-
-@login_required
-@csrf_protect
-def lms_quiz(request, quiz_id):
-    quiz = get_object_or_404(Quiz, id=quiz_id)
-    questions = quiz.questions.all()
-    
-    if request.method == 'POST':
-        score = 0
-        total_questions = questions.count()
-        
-        for q in questions:
-            user_ans = request.POST.get(f"question_{q.id}", '').strip().lower()
-            correct_ans = q.correct_answer.strip().lower()
-            if user_ans == correct_ans:
-                score += 1
-                
-        percentage = 0.0
-        if total_questions > 0:
-            percentage = round((score / total_questions) * 100.0, 1)
-            
-        passed = percentage >= 70.0
-        
-        QuizAnswer.objects.create(
-            user=request.user,
-            quiz=quiz,
-            score=percentage,
-            passed=passed
-        )
-        
-        messages.success(request, f"Quiz submitted! Score: {percentage}% ({'PASSED' if passed else 'FAILED'})")
-        return redirect('lms_lecture', lecture_id=quiz.module.lectures.first().id)
-        
-    context = {
-        'quiz': quiz,
-        'questions_list': []
-    }
-    for q in questions:
-        context['questions_list'].append({
-            'id': q.id,
-            'text': q.question_text,
-            'type': q.question_type,
-            'options': json.loads(q.options_json) if q.options_json else []
-        })
-        
-    context.update(get_erp_context(request))
-    return render(request, 'lms_quiz.html', context)
-
-
-@login_required
-@csrf_protect
-def lms_submit_assignment(request, assignment_id):
-    if request.method != 'POST':
-        return HttpResponse("POST request required.", status=405)
-        
-    assignment = get_object_or_404(Assignment, id=assignment_id)
-    github_link = request.POST.get('github_link', '').strip()
-    project_url = request.POST.get('project_url', '').strip()
-    file = request.FILES.get('submission_file')
-    
-    if not (github_link or project_url or file):
-        messages.error(request, "Please provide either a GitHub repository link, project URL, or file upload.")
-        return redirect('lms_lecture', lecture_id=assignment.lecture.id)
-        
-    sub, _ = AssignmentSubmission.objects.get_or_create(user=request.user, assignment=assignment)
-    sub.github_link = github_link
-    sub.project_url = project_url
-    if file:
-        sub.file = file
-    sub.status = 'submitted'
-    sub.save()
-    
-    messages.success(request, "Assignment submitted successfully!")
-    return redirect('lms_lecture', lecture_id=assignment.lecture.id)
-
-
-@login_required
-def lms_download_certificate(request, cert_id):
-    cert = get_object_or_404(Certificate, id=cert_id, user=request.user)
-    
-    from reportlab.pdfgen import canvas
-    from reportlab.lib.pagesizes import letter, landscape
-    
-    buffer = io.BytesIO()
-    p = canvas.Canvas(buffer, pagesize=landscape(letter))
-    
-    p.setStrokeColorRGB(0.38, 0.40, 0.94)
-    p.setLineWidth(6)
-    p.rect(30, 30, 732, 552)
-    
-    p.setStrokeColorRGB(0.66, 0.33, 0.97)
-    p.setLineWidth(2)
-    p.rect(40, 40, 712, 532)
-    
-    p.setFont("Helvetica-Bold", 36)
-    p.setFillColorRGB(0.06, 0.09, 0.19)
-    p.drawCentredString(396, 450, "CERTIFICATE OF COMPLETION")
-    
-    p.setFont("Helvetica", 14)
-    p.drawCentredString(396, 410, "This is proudly presented to")
-    
-    p.setFont("Helvetica-Bold", 28)
-    p.setFillColorRGB(0.38, 0.40, 0.94)
-    student_name = request.user.profile.full_name if hasattr(request.user, 'profile') and request.user.profile.full_name else request.user.username
-    p.drawCentredString(396, 350, student_name.upper())
-    
-    p.setFont("Helvetica", 14)
-    p.setFillColorRGB(0.06, 0.09, 0.19)
-    p.drawCentredString(396, 290, "for successfully completing the core training curriculum and projects of the")
-    p.setFont("Helvetica-Bold", 16)
-    p.drawCentredString(396, 260, f"{cert.course.name.upper()}")
-    
-    p.setStrokeColorRGB(0.7, 0.7, 0.7)
-    p.setLineWidth(1)
-    p.line(200, 220, 592, 220)
-    
-    p.setFont("Helvetica", 11)
-    p.setFillColorRGB(0.4, 0.4, 0.4)
-    p.drawString(100, 150, f"Completion Date: {cert.completion_date.strftime('%Y-%m-%d')}")
-    p.drawRightString(692, 150, f"Verification ID: {cert.verification_id}")
-    
-    p.drawCentredString(396, 120, "BlueNova Technologies Cohort Coordinator")
-    p.line(296, 140, 496, 140)
-    
-    p.showPage()
-    p.save()
-    
-    buffer.seek(0)
-    response = HttpResponse(buffer, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="BlueNova_Certificate_{cert.verification_id}.pdf"'
-    return response
-
-
-@login_required
-@admin_required
-def lms_admin_panel(request):
-    courses = LMSCourse.objects.all()
-    modules = LMSModule.objects.all()
-    lectures = Lecture.objects.all()
-    progress_metrics = LectureProgress.objects.all().order_by('-updated_at')
-    
-    if request.method == 'POST':
-        action = request.POST.get('action')
-        if action == 'create_course':
-            name = request.POST.get('name', '').strip()
-            tagline = request.POST.get('tagline', '').strip()
-            desc = request.POST.get('description', '').strip()
-            banner = request.POST.get('banner_url', '').strip() or 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=400&q=80'
-            if name:
-                LMSCourse.objects.create(name=name, tagline=tagline, description=desc, banner_url=banner)
-                messages.success(request, f"Course '{name}' created successfully!")
-        elif action == 'create_module':
-            course_id = request.POST.get('course_id')
-            title = request.POST.get('title', '').strip()
-            order = int(request.POST.get('order', 1))
-            if course_id and title:
-                course = get_object_or_404(LMSCourse, id=course_id)
-                LMSModule.objects.create(course=course, title=title, order=order)
-                messages.success(request, f"Module '{title}' created successfully!")
-        elif action == 'create_lecture':
-            module_id = request.POST.get('module_id')
-            title = request.POST.get('title', '').strip()
-            video = request.POST.get('video_url', '').strip() or 'https://www.w3schools.com/html/mov_bbb.mp4'
-            desc = request.POST.get('description', '').strip()
-            dur = request.POST.get('duration', '').strip() or '15:00'
-            order = int(request.POST.get('order', 1))
-            if module_id and title:
-                module = get_object_or_404(LMSModule, id=module_id)
-                Lecture.objects.create(module=module, title=title, video_url=video, description=desc, duration=dur, order=order)
-                messages.success(request, f"Lecture '{title}' added successfully!")
-                
-        return redirect('lms_admin_panel')
-        
-    context = {
-        'courses_list': courses,
-        'modules_list': modules,
-        'lectures_list': lectures,
-        'progress_list': progress_metrics
-    }
-    context.update(get_erp_context(request))
-    return render(request, 'lms_admin.html', context)

@@ -48,6 +48,36 @@ class ERPTestCase(TestCase):
         
         self.assertEqual(response.status_code, 400)
         self.assertFalse(response.json()['success'])
+        self.assertEqual(response.json()['message'], 'Incorrect password.')
+
+    def test_login_deleted_user(self):
+        response = self.client.post(reverse('login'), {
+            'username': 'deleted_user',
+            'password': 'somepassword'
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        
+        self.assertEqual(response.status_code, 404)
+        self.assertFalse(response.json()['success'])
+        self.assertEqual(response.json()['message'], 'User does not exist.')
+
+    def test_login_disabled_user(self):
+        # Create disabled user
+        disabled_user = User.objects.create_user(
+            username='disabled_test',
+            email='disabled_test@bluenova.com',
+            password='testpassword',
+            role='user',
+            is_active=False
+        )
+        response = self.client.post(reverse('login'), {
+            'username': 'disabled_test',
+            'password': 'testpassword'
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(response.json()['success'])
+        self.assertIn('disabled', response.json()['message'])
+
 
     def test_admin_only_view_denied_to_intern(self):
         # Log in as Intern
@@ -63,9 +93,9 @@ class ERPTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_course_detail_resolves_valid_slug(self):
-        response = self.client.get(reverse('course_detail', args=['web-development']))
+        response = self.client.get(reverse('course_detail', args=['python-development']))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Web Development')
+        self.assertContains(response, 'Python Development')
 
     def test_course_detail_404_invalid_slug(self):
         response = self.client.get(reverse('course_detail', args=['non-existent-course-slug']))
@@ -109,103 +139,74 @@ class ERPTestCase(TestCase):
         response = self.client.get(reverse('admin_applications'))
         self.assertEqual(response.status_code, 302)
 
-    def test_lms_dashboard_auth_required(self):
-        response = self.client.get(reverse('lms_dashboard'))
-        self.assertEqual(response.status_code, 302)
-
-    def test_lms_dashboard_loads_for_logged_in_user(self):
-        self.client.login(username='intern_test', password='testpassword')
-        response = self.client.get(reverse('lms_dashboard'))
+    def test_course_detail_page_loads(self):
+        response = self.client.get(reverse('course_detail', args=['python-development']))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Python Full Stack Development')
+        self.assertContains(response, 'Python Development')
 
-    def test_lms_lecture_page_loads(self):
-        self.client.login(username='intern_test', password='testpassword')
-        # Trigger dashboard load once to ensure database seeding
-        self.client.get(reverse('lms_dashboard'))
-        
-        from core.models import Lecture
-        lec = Lecture.objects.first()
-        self.assertIsNotNone(lec)
-        
-        response = self.client.get(reverse('lms_lecture', args=[lec.id]))
+    def test_course_detail_page_404(self):
+        response = self.client.get(reverse('course_detail', args=['invalid-course-slug']))
+        self.assertEqual(response.status_code, 404)
+
+    def test_apply_page_autofills_program(self):
+        response = self.client.get(reverse('apply') + '?course=python-development')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, html.escape(lec.title))
+        self.assertEqual(response.context['prefilled_course'], 'Python Development')
 
-    def test_lms_update_progress_endpoint(self):
-        self.client.login(username='intern_test', password='testpassword')
-        self.client.get(reverse('lms_dashboard'))
-        
-        from core.models import Lecture, LectureProgress
-        lec = Lecture.objects.first()
-        
-        response = self.client.post(
-            reverse('lms_update_progress', args=[lec.id]),
-            data=json.dumps({'watch_percentage': 50.0, 'resume_timestamp': 100.0, 'time_spent': 5}),
-            content_type='application/json',
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-        )
+    def test_apply_success_page_loads(self):
+        response = self.client.get(reverse('apply_success') + '?course=Python%20Development')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Python Development')
+
+    def test_login_via_email(self):
+        response = self.client.post(reverse('login'), {
+            'username': 'intern_test@bluenova.com',
+            'password': 'testpassword'
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json()['success'])
+
+    def test_login_next_parameter_redirect(self):
+        response = self.client.post(reverse('login') + '?next=/courses/python-development/', {
+            'username': 'intern_test',
+            'password': 'testpassword'
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['redirect'], '/courses/python-development/')
+
+    def test_forgot_password_and_reset_password_workflow(self):
+        # 1. Forgot password lookup
+        response = self.client.post(reverse('forgot_password'), {
+            'email': 'intern_test@bluenova.com'
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.json()['success'])
         
-        progress = LectureProgress.objects.get(user=self.intern, lecture=lec)
-        self.assertEqual(progress.watch_percentage, 50.0)
-        self.assertEqual(progress.resume_timestamp, 100.0)
+        # Verify session stores the email
+        session = self.client.session
+        self.assertEqual(session.get('reset_email'), 'intern_test@bluenova.com')
 
-    def test_lms_auto_save_notes_endpoint(self):
-        self.client.login(username='intern_test', password='testpassword')
-        self.client.get(reverse('lms_dashboard'))
-        
-        from core.models import Lecture, StudentNote
-        lec = Lecture.objects.first()
-        
-        response = self.client.post(
-            reverse('lms_save_note', args=[lec.id]),
-            data=json.dumps({'content': 'This is a test note', 'timestamp': 30.0}),
-            content_type='application/json',
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-        )
+        # 2. Reset password
+        response = self.client.post(reverse('reset_password'), {
+            'password': 'newpassword',
+            'confirm_password': 'newpassword'
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.json()['success'])
-        
-        note = StudentNote.objects.get(user=self.intern, lecture=lec)
-        self.assertEqual(note.content, 'This is a test note')
-        self.assertEqual(note.timestamp, 30.0)
 
-    def test_lms_export_notes_endpoints(self):
-        self.client.login(username='intern_test', password='testpassword')
-        self.client.get(reverse('lms_dashboard'))
-        from core.models import Lecture
-        lec = Lecture.objects.first()
-        
-        # Test markdown export
-        md_response = self.client.get(reverse('lms_export_note_markdown', args=[lec.id]))
-        self.assertEqual(md_response.status_code, 200)
-        self.assertEqual(md_response['Content-Type'], 'text/markdown')
-        
-        # Test PDF export
-        pdf_response = self.client.get(reverse('lms_export_note_pdf', args=[lec.id]))
-        self.assertEqual(pdf_response.status_code, 200)
-        self.assertEqual(pdf_response['Content-Type'], 'application/pdf')
+        # 3. Test that old password fails
+        login_fail = self.client.post(reverse('login'), {
+            'username': 'intern_test',
+            'password': 'testpassword'
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(login_fail.status_code, 400)
 
-    def test_lms_enrollment_restrictions(self):
-        # Create a new user with no enrollments
-        new_user = User.objects.create_user(username='new_student', password='testpassword')
-        Profile.objects.create(user=new_user)
-        
-        # Log in the user
-        self.client.login(username='new_student', password='testpassword')
-        
-        # Seed courses
-        self.client.get(reverse('lms_dashboard'))
-        
-        from core.models import Lecture, Enrollment
-        lec = Lecture.objects.first()
-        course = lec.module.course
-        
-        # Remove any automatic enrollment created during dashboard load for testing purposes
-        Enrollment.objects.filter(user=new_user, course=course).delete()
-        
-        # Requesting lecture page should redirect back to dashboard due to lack of enrollment
-        response = self.client.get(reverse('lms_lecture', args=[lec.id]))
-        self.assertEqual(response.status_code, 302)
+        # 4. Test that new password succeeds
+        login_success = self.client.post(reverse('login'), {
+            'username': 'intern_test',
+            'password': 'newpassword'
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(login_success.status_code, 200)
+        self.assertTrue(login_success.json()['success'])
+
+

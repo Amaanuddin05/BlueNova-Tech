@@ -111,3 +111,5 @@ X_FRAME_OPTIONS = 'DENY'
 
 # Custom Authentication redirect target
 LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/erp/dashboard/'
+LOGOUT_REDIRECT_URL = '/'

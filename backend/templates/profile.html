@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <!-- Cropper.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
-    <link href="/static/css/style.css?v=1.3" rel="stylesheet">
+    <link href="/static/css/style.css?v=6.0" rel="stylesheet">
     <style>
         /* Camera overlay icon style */
         .avatar-hover-trigger:hover #prof-avatar {
@@ -51,20 +51,20 @@
         <!-- Sidebar Navigation -->
         <aside class="app-sidebar">
             <div class="sidebar-header">
-                <a href="/erp/dashboard/" class="d-flex align-items-center gap-2 fw-bold text-white text-decoration-none">
+                <a href="/" class="d-flex align-items-center gap-2 fw-bold text-white text-decoration-none">
                     <i class="bi bi-rocket-takeoff-fill text-primary"></i> <span>BlueNova ERP</span>
                 </a>
                 <button class="sidebar-toggler sidebar-toggle-btn d-lg-none"><i class="bi bi-x-lg"></i></button>
             </div>
             <ul class="sidebar-menu">
                 <li class="sidebar-item">
-                    <a href="/erp/dashboard/" class="sidebar-link"><i class="bi bi-grid-fill"></i> <span>Dashboard</span></a>
+                    <a href="/" class="sidebar-link"><i class="bi bi-grid-fill"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="sidebar-item active">
                     <a href="/erp/profile/" class="sidebar-link"><i class="bi bi-person-fill"></i> <span>My Profile</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{% url 'lms_dashboard' %}" class="sidebar-link"><i class="bi bi-mortarboard-fill"></i> <span>Learning Portal</span></a>
+                    
                 </li>
                 <li class="sidebar-item">
                     <a href="/erp/upload-files/" class="sidebar-link"><i class="bi bi-cloud-arrow-up-fill"></i> <span>Upload Files</span></a>
@@ -108,7 +108,7 @@
                 {% if messages %}
                 <div class="messages mb-4 col-md-10 col-lg-8 mx-auto">
                     {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-white glass-panel py-2 px-3 border-0" role="alert" style="background: rgba(99, 102, 241, 0.2); backdrop-filter: blur(10px);">
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-white glass-panel py-2 px-3 border-0" role="alert" style="background: rgba(0, 200, 83, 0.2); backdrop-filter: blur(10px);">
                         <i class="bi bi-info-circle-fill text-primary me-2"></i> {{ message }}
                         <button type="button" class="btn-close btn-close-white btn-sm" data-bs-dismiss="alert" aria-label="Close" style="font-size: 0.8rem;"></button>
                     </div>
@@ -234,7 +234,8 @@
     <!-- Cropper.js Script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     <script src="/static/js/mockData.js"></script>
-    <script src="/static/js/app.js"></script>
+    <script src="/static/js/app.js?v=6.0"></script>
+    <script src="/static/js/animations.js?v=6.0"></script>
     <script>
         // Profile Picture management logic
         let cropper = null;

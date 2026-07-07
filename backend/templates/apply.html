@@ -84,12 +84,19 @@
                     <div class="row g-3 mb-4">
                         <div class="col-md-4">
                             <label for="course" class="form-label">Preferred Program <span class="text-danger">*</span></label>
-                            <select class="form-select form-control-premium text-white" id="course" name="course" required>
-                                <option value="" disabled>Select program</option>
-                                {% for c in courses %}
-                                    <option value="{{ c }}" {% if prefilled_course == c %}selected{% endif %}>{{ c }}</option>
-                                {% endfor %}
-                            </select>
+                            {% if prefilled_course %}
+                                <select class="form-select form-control-premium text-white bg-dark-subtle" id="course_display" disabled>
+                                    <option value="{{ prefilled_course }}" selected>{{ prefilled_course }}</option>
+                                </select>
+                                <input type="hidden" name="course" value="{{ prefilled_course }}">
+                            {% else %}
+                                <select class="form-select form-control-premium text-white" id="course" name="course" required>
+                                    <option value="" disabled selected>Select program</option>
+                                    {% for c in courses %}
+                                        <option value="{{ c }}">{{ c }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
                         </div>
                         <div class="col-md-4">
                             <label for="batch" class="form-label">Preferred Batch <span class="text-danger">*</span></label>
@@ -182,10 +189,11 @@ document.addEventListener("DOMContentLoaded", function() {
             btnSpinner.classList.add("d-none");
 
             if (res.status === 200 && res.body.success) {
-                alertBox.className = "alert alert-success";
-                alertBox.innerHTML = `<i class='bi bi-check-circle-fill me-2'></i>${res.body.message}`;
-                alertBox.classList.remove("d-none");
-                form.reset();
+                let redirectUrl = `{% url 'apply_success' %}?course=${encodeURIComponent(res.body.course)}`;
+                if (res.body.username) {
+                    redirectUrl += `&username=${encodeURIComponent(res.body.username)}`;
+                }
+                window.location.href = redirectUrl;
             } else {
                 alertBox.className = "alert alert-danger";
                 alertBox.innerHTML = `<i class='bi bi-x-circle-fill me-2'></i>${res.body.message || "Failed to submit application."}`;
