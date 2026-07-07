@@ -111,7 +111,7 @@ def get_erp_context(request):
         
     # Query logs
     logs_list = []
-    logs_query = ActivityLog.objects.all() if request.user.role == 'admin' else ActivityLog.objects.filter(user=request.user)
+    logs_query = ActivityLog.objects.all().order_by('-timestamp') if request.user.role == 'admin' else ActivityLog.objects.filter(user=request.user).order_by('-timestamp')
     for l in logs_query:
         logs_list.append({
             'id': l.id,
@@ -291,6 +291,11 @@ def edit_profile_view(request):
     profile = get_object_or_404(Profile, user=request.user)
     if request.method == 'POST':
         old_fullname = profile.full_name
+        old_phone = profile.phone
+        old_bio = profile.bio
+        old_skills = profile.skills
+        old_academic = profile.academic_background
+        old_track = profile.track
 
         profile.full_name           = request.POST.get('fullname', '').strip()
         profile.phone               = request.POST.get('phone', '').strip()
@@ -319,15 +324,15 @@ def edit_profile_view(request):
         changed_parts = []
         if old_fullname != profile.full_name:
             changed_parts.append('name')
-        if profile.phone:
+        if old_phone != profile.phone:
             changed_parts.append('phone')
-        if profile.bio:
+        if old_bio != profile.bio:
             changed_parts.append('bio')
-        if profile.skills:
+        if old_skills != profile.skills:
             changed_parts.append('skills')
-        if profile.academic_background:
+        if old_academic != profile.academic_background:
             changed_parts.append('academic background')
-        if profile.track:
+        if old_track != profile.track:
             changed_parts.append(f'track ({profile.track})')
         summary = ', '.join(changed_parts) if changed_parts else 'profile fields'
         log_action(request.user, f"Updated profile: {summary}", request)

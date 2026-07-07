@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
 </head>
+
 <body>
 
     {% if request.user.is_authenticated %}
@@ -21,44 +23,52 @@
         localStorage.setItem("erp_session", '{{ session_token }}');
     </script>
     {% endif %}
-    
+
 
     <div class="app-wrapper">
         <!-- Sidebar Navigation -->
         <aside class="app-sidebar">
             <div class="sidebar-header">
-                <a href="/erp/dashboard/" class="d-flex align-items-center gap-2 fw-bold text-white text-decoration-none">
+                <a href="/erp/dashboard/"
+                    class="d-flex align-items-center gap-2 fw-bold text-white text-decoration-none">
                     <i class="bi bi-rocket-takeoff-fill text-primary"></i> <span>BlueNova ERP</span>
                 </a>
                 <button class="sidebar-toggler sidebar-toggle-btn d-lg-none"><i class="bi bi-x-lg"></i></button>
             </div>
             <ul class="sidebar-menu">
                 <li class="sidebar-item">
-                    <a href="/erp/dashboard/" class="sidebar-link"><i class="bi bi-grid-fill"></i> <span>Dashboard</span></a>
+                    <a href="/erp/dashboard/" class="sidebar-link"><i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="/erp/profile/" class="sidebar-link"><i class="bi bi-person-fill"></i> <span>My Profile</span></a>
+                    <a href="/erp/profile/" class="sidebar-link"><i class="bi bi-person-fill"></i> <span>My
+                            Profile</span></a>
+                </li>
+                <li class="sidebar-item"><a href="/erp/upload-files/" class="sidebar-link"><i
+                            class="bi bi-folder-fill"></i> <span>Files</span></a></li>
+                <li class="sidebar-item">
+                    <a href="/erp/messages/" class="sidebar-link"><i class="bi bi-chat-left-text-fill"></i>
+                        <span>Messages</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="/erp/upload-files/" class="sidebar-link"><i class="bi bi-cloud-arrow-up-fill"></i> <span>Upload Files</span></a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="/erp/messages/" class="sidebar-link"><i class="bi bi-chat-left-text-fill"></i> <span>Messages</span></a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="/erp/history/" class="sidebar-link"><i class="bi bi-clock-history"></i> <span>History</span></a>
+                    <a href="/erp/history/" class="sidebar-link"><i class="bi bi-clock-history"></i>
+                        <span>History</span></a>
                 </li>
                 <li class="sidebar-item active">
-                    <a href="/erp/help-center/" class="sidebar-link"><i class="bi bi-question-circle-fill"></i> <span>Help Center</span></a>
+                    <a href="/erp/help-center/" class="sidebar-link"><i class="bi bi-question-circle-fill"></i>
+                        <span>Help Center</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="/erp/feedback/" class="sidebar-link"><i class="bi bi-star-fill"></i> <span>Feedback</span></a>
+                    <a href="/erp/feedback/" class="sidebar-link"><i class="bi bi-star-fill"></i>
+                        <span>Feedback</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{% url 'settings' %}" class="sidebar-link"><i class="bi bi-gear-fill"></i> <span>Settings</span></a>
+                    <a href="{% url 'settings' %}" class="sidebar-link"><i class="bi bi-gear-fill"></i>
+                        <span>Settings</span></a>
                 </li>
                 <li class="sidebar-item mt-5">
-                    <a href="/auth/logout/" class="sidebar-link text-danger"><i class="bi bi-box-arrow-right"></i> <span>Sign Out</span></a>
+                    <a href="/auth/logout/" class="sidebar-link text-danger"><i class="bi bi-box-arrow-right"></i>
+                        <span>Sign Out</span></a>
                 </li>
             </ul>
         </aside>
@@ -68,7 +78,8 @@
             <!-- Top Navbar -->
             <header class="app-navbar">
                 <div class="d-flex align-items-center gap-3">
-                    <button class="sidebar-toggler sidebar-toggle-btn d-lg-block text-white" aria-label="Toggle Sidebar"><i class="bi bi-list"></i></button>
+                    <button class="sidebar-toggler sidebar-toggle-btn d-lg-block text-white"
+                        aria-label="Toggle Sidebar"><i class="bi bi-list"></i></button>
                 </div>
             </header>
 
@@ -83,41 +94,49 @@
                     <div class="col-lg-6">
                         <div class="glass-panel p-4">
                             <h4 class="text-white mb-3">Frequently Asked Questions</h4>
-                            
+
                             <div class="accordion accordion-flush" id="helpAccordion">
-                                <div class="accordion-item bg-transparent text-white border-bottom border-secondary-subtle">
+                                <div
+                                    class="accordion-item bg-transparent text-white border-bottom border-secondary-subtle">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed bg-transparent text-white border-0 py-3" type="button" data-bs-toggle="collapse" data-bs-target="#h1">
+                                        <button
+                                            class="accordion-button collapsed bg-transparent text-white border-0 py-3"
+                                            type="button" data-bs-toggle="collapse" data-bs-target="#h1">
                                             How do I submit my weekly files?
                                         </button>
                                     </h2>
                                     <div id="h1" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
                                         <div class="accordion-body text-secondary small">
-                                            Navigate to the "Upload Files" tab in your sidebar, select your document (ZIP, PDF, etc.), and drag it into the drop zone.
+                                            Navigate to the "Upload Files" tab in your sidebar, select your document
+                                            (ZIP, PDF, etc.), and drag it into the drop zone.
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item bg-transparent text-white border-bottom border-secondary-subtle">
+                                <div
+                                    class="accordion-item bg-transparent text-white border-bottom border-secondary-subtle">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed bg-transparent text-white border-0 py-3" type="button" data-bs-toggle="collapse" data-bs-target="#h2">
+                                        <button
+                                            class="accordion-button collapsed bg-transparent text-white border-0 py-3"
+                                            type="button" data-bs-toggle="collapse" data-bs-target="#h2">
                                             What are the file uploading limits?
                                         </button>
                                     </h2>
                                     <div id="h2" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
                                         <div class="accordion-body text-secondary small">
-                                            The maximum file size is restricted to 10MB per document. Acceptable extensions are PDF, DOCX, ZIP, PNG, and JPG.
+                                            The maximum file size is restricted to 10MB per document. Acceptable
+                                            extensions are PDF, DOCX, ZIP, PNG, and JPG.
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-6">
                         <div class="glass-panel p-4">
                             <h4 class="text-white mb-3">Submit Support Ticket</h4>
                             <form id="helpTicketForm">
-{% csrf_token %}
+                                {% csrf_token %}
 
                                 <div class="mb-3">
                                     <label class="form-label text-secondary small">Issue Category</label>
@@ -130,7 +149,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-secondary small">Description</label>
-                                    <textarea class="form-control form-control-premium" rows="4" placeholder="Detail your issue details here..." required></textarea>
+                                    <textarea class="form-control form-control-premium" rows="4"
+                                        placeholder="Detail your issue details here..." required></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-premium w-100 py-3">Submit Ticket</button>
                             </form>
@@ -143,6 +163,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/mockData.js"></script>
-    <script src="/static/js/app.js"></script>
+    <script src="/static/js/app.js?v={% now "U" %}"></script>
 </body>
+
 </html>

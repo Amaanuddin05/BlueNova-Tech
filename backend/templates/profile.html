@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
             border-radius: 50%;
             border: 3px solid var(--card-border, #334);
         }
+
         .status-chip {
             display: inline-flex;
             align-items: center;
@@ -25,9 +27,22 @@
             font-weight: 600;
             letter-spacing: 0.04em;
         }
-        .chip-pending  { background: rgba(234,179,8,.15);  color: #fbbf24; }
-        .chip-approved { background: rgba(34,197,94,.15);  color: #4ade80; }
-        .chip-rejected { background: rgba(239,68,68,.15);  color: #f87171; }
+
+        .chip-pending {
+            background: rgba(234, 179, 8, .15);
+            color: #fbbf24;
+        }
+
+        .chip-approved {
+            background: rgba(34, 197, 94, .15);
+            color: #4ade80;
+        }
+
+        .chip-rejected {
+            background: rgba(239, 68, 68, .15);
+            color: #f87171;
+        }
+
         .info-label {
             font-size: 0.72rem;
             text-transform: uppercase;
@@ -36,52 +51,58 @@
             font-weight: 600;
             margin-bottom: 2px;
         }
+
         .info-value {
             font-size: 0.95rem;
             color: var(--text-primary, #f1f5f9);
             font-weight: 500;
         }
+
         .skill-tag {
             display: inline-block;
-            background: rgba(59,130,246,.12);
+            background: rgba(59, 130, 246, .12);
             color: #93c5fd;
-            border: 1px solid rgba(59,130,246,.25);
+            border: 1px solid rgba(59, 130, 246, .25);
             border-radius: 20px;
             padding: 3px 11px;
             font-size: 0.78rem;
             margin: 3px 3px 3px 0;
         }
+
         .completion-bar-wrap {
-            background: rgba(255,255,255,.07);
+            background: rgba(255, 255, 255, .07);
             border-radius: 20px;
             height: 6px;
             overflow: hidden;
             margin-top: 6px;
         }
+
         .completion-bar-fill {
             height: 100%;
             background: linear-gradient(90deg, #3b82f6, #6366f1);
             border-radius: 20px;
             transition: width .5s ease;
         }
+
         .section-divider {
             border: none;
-            border-top: 1px solid rgba(255,255,255,.07);
+            border-top: 1px solid rgba(255, 255, 255, .07);
             margin: 1rem 0;
         }
     </style>
 </head>
+
 <body>
 
     {% if request.user.is_authenticated %}
     <script>
-        localStorage.setItem("erp_users",         '{{ json_users|escapejs }}');
-        localStorage.setItem("erp_files",         '{{ json_files|escapejs }}');
+        localStorage.setItem("erp_users", '{{ json_users|escapejs }}');
+        localStorage.setItem("erp_files", '{{ json_files|escapejs }}');
         localStorage.setItem("erp_notifications", '{{ json_notifications|escapejs }}');
-        localStorage.setItem("erp_messages",      '{{ json_messages|escapejs }}');
-        localStorage.setItem("erp_logs",          '{{ json_logs|escapejs }}');
-        localStorage.setItem("erp_history",       '{{ json_history|escapejs }}');
-        localStorage.setItem("erp_session",       '{{ session_token }}');
+        localStorage.setItem("erp_messages", '{{ json_messages|escapejs }}');
+        localStorage.setItem("erp_logs", '{{ json_logs|escapejs }}');
+        localStorage.setItem("erp_history", '{{ json_history|escapejs }}');
+        localStorage.setItem("erp_session", '{{ session_token }}');
     </script>
     {% endif %}
 
@@ -90,22 +111,32 @@
         <!-- ───── Sidebar ───── -->
         <aside class="app-sidebar">
             <div class="sidebar-header">
-                <a href="/erp/dashboard/" class="d-flex align-items-center gap-2 fw-bold text-white text-decoration-none">
+                <a href="/erp/dashboard/"
+                    class="d-flex align-items-center gap-2 fw-bold text-white text-decoration-none">
                     <i class="bi bi-rocket-takeoff-fill text-primary"></i>
                     <span>BlueNova ERP</span>
                 </a>
                 <button class="sidebar-toggler sidebar-toggle-btn d-lg-none"><i class="bi bi-x-lg"></i></button>
             </div>
             <ul class="sidebar-menu">
-                <li class="sidebar-item"><a href="/erp/dashboard/"    class="sidebar-link"><i class="bi bi-grid-fill"></i>            <span>Dashboard</span></a></li>
-                <li class="sidebar-item active"><a href="/erp/profile/" class="sidebar-link"><i class="bi bi-person-fill"></i>        <span>My Profile</span></a></li>
-                <li class="sidebar-item"><a href="/erp/upload-files/" class="sidebar-link"><i class="bi bi-cloud-arrow-up-fill"></i>  <span>Upload Files</span></a></li>
-                <li class="sidebar-item"><a href="/erp/messages/"     class="sidebar-link"><i class="bi bi-chat-left-text-fill"></i>  <span>Messages</span></a></li>
-                <li class="sidebar-item"><a href="/erp/history/"      class="sidebar-link"><i class="bi bi-clock-history"></i>        <span>History</span></a></li>
-                <li class="sidebar-item"><a href="/erp/help-center/"  class="sidebar-link"><i class="bi bi-question-circle-fill"></i> <span>Help Center</span></a></li>
-                <li class="sidebar-item"><a href="/erp/feedback/"     class="sidebar-link"><i class="bi bi-star-fill"></i>            <span>Feedback</span></a></li>
-                <li class="sidebar-item"><a href="{% url 'settings' %}" class="sidebar-link"><i class="bi bi-gear-fill"></i>          <span>Settings</span></a></li>
-                <li class="sidebar-item mt-5"><a href="/auth/logout/" class="sidebar-link text-danger"><i class="bi bi-box-arrow-right"></i> <span>Sign Out</span></a></li>
+                <li class="sidebar-item"><a href="/erp/dashboard/" class="sidebar-link"><i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span></a></li>
+                <li class="sidebar-item active"><a href="/erp/profile/" class="sidebar-link"><i
+                            class="bi bi-person-fill"></i> <span>My Profile</span></a></li>
+                <li class="sidebar-item"><a href="/erp/upload-files/" class="sidebar-link"><i
+                            class="bi bi-folder-fill"></i> <span>Files</span></a></li>
+                <li class="sidebar-item"><a href="/erp/messages/" class="sidebar-link"><i
+                            class="bi bi-chat-left-text-fill"></i> <span>Messages</span></a></li>
+                <li class="sidebar-item"><a href="/erp/history/" class="sidebar-link"><i
+                            class="bi bi-clock-history"></i> <span>History</span></a></li>
+                <li class="sidebar-item"><a href="/erp/help-center/" class="sidebar-link"><i
+                            class="bi bi-question-circle-fill"></i> <span>Help Center</span></a></li>
+                <li class="sidebar-item"><a href="/erp/feedback/" class="sidebar-link"><i class="bi bi-star-fill"></i>
+                        <span>Feedback</span></a></li>
+                <li class="sidebar-item"><a href="{% url 'settings' %}" class="sidebar-link"><i
+                            class="bi bi-gear-fill"></i> <span>Settings</span></a></li>
+                <li class="sidebar-item mt-5"><a href="/auth/logout/" class="sidebar-link text-danger"><i
+                            class="bi bi-box-arrow-right"></i> <span>Sign Out</span></a></li>
             </ul>
         </aside>
 
@@ -113,7 +144,8 @@
         <main class="app-content">
             <header class="app-navbar">
                 <div class="d-flex align-items-center gap-3">
-                    <button class="sidebar-toggler sidebar-toggle-btn d-lg-block text-white" aria-label="Toggle Sidebar"><i class="bi bi-list"></i></button>
+                    <button class="sidebar-toggler sidebar-toggle-btn d-lg-block text-white"
+                        aria-label="Toggle Sidebar"><i class="bi bi-list"></i></button>
                 </div>
                 <div class="d-flex align-items-center gap-4">
                     <button class="theme-switch theme-toggle-btn" aria-label="Toggle Theme"></button>
@@ -135,10 +167,8 @@
                     <!-- ── LEFT: identity card ── -->
                     <div class="col-lg-4">
                         <div class="glass-panel p-4 text-center">
-                            <img class="profile-avatar mb-3"
-                                 src="{{ profile.profile_picture.url }}"
-                                 alt="Profile Picture"
-                                 onerror="this.src='/media/profile_pictures/default-avatar.png'">
+                            <img class="profile-avatar mb-3" src="{{ profile.profile_picture.url }}"
+                                alt="Profile Picture" onerror="this.src='/media/profile_pictures/default-avatar.png'">
 
                             <h4 class="text-white mb-1">
                                 {{ profile.full_name|default:request.user.username }}
@@ -149,11 +179,13 @@
                             </p>
 
                             {% if profile.status == 'approved' %}
-                            <span class="status-chip chip-approved"><i class="bi bi-check-circle-fill"></i> Approved</span>
+                            <span class="status-chip chip-approved"><i class="bi bi-check-circle-fill"></i>
+                                Approved</span>
                             {% elif profile.status == 'rejected' %}
                             <span class="status-chip chip-rejected"><i class="bi bi-x-circle-fill"></i> Rejected</span>
                             {% else %}
-                            <span class="status-chip chip-pending"><i class="bi bi-clock-fill"></i> Pending Review</span>
+                            <span class="status-chip chip-pending"><i class="bi bi-clock-fill"></i> Pending
+                                Review</span>
                             {% endif %}
 
                             <hr class="section-divider">
@@ -165,7 +197,8 @@
                                     <span class="text-white small fw-bold">{{ profile.completion_percentage }}%</span>
                                 </div>
                                 <div class="completion-bar-wrap">
-                                    <div class="completion-bar-fill" style="width: {{ profile.completion_percentage }}%;"></div>
+                                    <div class="completion-bar-fill"
+                                        style="width: {{ profile.completion_percentage }}%;"></div>
                                 </div>
                             </div>
 
@@ -256,6 +289,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/mockData.js"></script>
-    <script src="/static/js/app.js"></script>
+    <script src="/static/js/app.js?v={% now "U" %}"></script>
 </body>
+
 </html>

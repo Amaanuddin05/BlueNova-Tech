@@ -336,9 +336,9 @@ function renderUserDashboard() {
     // Render dynamic tables
     renderRecentActivities(user.id);
 }
-
 function renderRecentActivities(userId) {
-    const logs = JSON.parse(localStorage.getItem("erp_logs") || "[]").filter(l => l.user_id === userId);
+    const logs = JSON.parse(localStorage.getItem("erp_logs") || "[]").filter(l => Number(l.user_id) === Number(userId));
+    logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     const tbody = document.getElementById("recent-activities-table");
     if (!tbody) return;
     
@@ -350,10 +350,9 @@ function renderRecentActivities(userId) {
     
     logs.slice(0, 5).forEach(log => {
         const tr = document.createElement("tr");
-        const formattedDate = new Date(log.timestamp).toLocaleDateString();
+        const formattedDate = new Date(log.timestamp).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
         tr.innerHTML = `
             <td>${log.action}</td>
-            <td>${log.ip_address}</td>
             <td>${formattedDate}</td>
         `;
         tbody.appendChild(tr);
