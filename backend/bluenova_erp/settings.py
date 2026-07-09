@@ -128,6 +128,13 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost').split(',')
 ]
 
+# Dynamically trust any domain configured in ALLOWED_HOSTS
+for host in ALLOWED_HOSTS:
+    if host and host != '*':
+        if not host.startswith('http'):
+            CSRF_TRUSTED_ORIGINS.append(f"https://{host}")
+            CSRF_TRUSTED_ORIGINS.append(f"http://{host}")
+
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
