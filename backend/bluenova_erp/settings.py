@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Serve static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,12 +62,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bluenova_erp.wsgi.application'
 
-# Database Setup - SQLite
+# Database — uses DATABASE_URL if set (Railway/PostgreSQL), else SQLite for local dev
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        ssl_require=not DEBUG,
+    )
 }
 
 # Password validation
@@ -110,15 +113,21 @@ SESSION_COOKIE_HTTPONLY = True
 # SameSite=Lax blocks CSRF via cross-site navigation while allowing normal links
 SESSION_COOKIE_SAMESITE = 'Lax'
 
-# Set to True in production when serving over HTTPS
-# SESSION_COOKIE_SECURE = True  # Uncomment for HTTPS/production
+# Enable secure cookies in production (HTTPS only)
+SESSION_COOKIE_SECURE = not DEBUG
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CSRF PROTECTION
 # ─────────────────────────────────────────────────────────────────────────────
 CSRF_COOKIE_HTTPONLY = False   # Must be False so JS can read the token for AJAX
 CSRF_COOKIE_SAMESITE = 'Lax'  # Consistent with session cookie policy
-# CSRF_COOKIE_SECURE = True    # Uncomment for HTTPS/production
+CSRF_COOKIE_SECURE = not DEBUG
+
+# Trust Railway's HTTPS proxy
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost').split(',')
+]
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
@@ -132,6 +141,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# WhiteNoise compressed static file storage for production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media Files (User Resumes, Avatars, ZIP uploads)
 MEDIA_URL = '/media/'
