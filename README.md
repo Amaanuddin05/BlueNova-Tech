@@ -260,6 +260,6 @@ This project is licensed under the **MIT License**.
 
 <div align="center">
 
-Built with ❤️ by **BlueNova Tech**
+Built with ❤️ by **Laweeza**
 
 </div>
