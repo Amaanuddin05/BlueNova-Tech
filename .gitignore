@@ -25,6 +25,7 @@ staticfiles/
 
 # Media / user-uploaded files (never commit user data)
 backend/media/
+!backend/media/profile_pictures/default-avatar.png
 
 # ─────────────────────────────────────────────
 # Environment & Secrets
